@@ -45,7 +45,10 @@ namespace BeerRatings.Infrastracture.Repositories
             List<UserRating> userRatings = new List<UserRating>();
             if (File.Exists(filePath))
             {
-                userRatings = JsonConvert.DeserializeObject<List<UserRating>>(File.ReadAllText(filePath), settings);
+                string fileJson = File.ReadAllText(filePath);
+                if (string.IsNullOrEmpty(fileJson))
+                    return userRatings;
+                userRatings = JsonConvert.DeserializeObject<List<UserRating>>(fileJson, settings);
             }
             return userRatings;
         }
